@@ -6,18 +6,14 @@ const Deck = (props) => {
   const [state, setState] = useState({
     cards: [],
   });
-  const call = async () => {
-    const result = await fetch(`http://localhost:4001/${props.path}`);
-    const { hands } = await result.json();
-    setState({ cards: hands[0] }); //verificar cambio
-    console.log(hands[0]);
-  };
   useEffect(() => {
+    const call = async () => {
+      const result = await fetch(`http://localhost:4001/${props.path}`);
+      const { hand } = await result.json();
+      setState({ cards: hand });
+    };
     call();
   }, [props.path]);
-  useEffect(() => {
-    console.log(state);
-  }, [state]);
   return (
     <div>
       {state.cards.length === 0 ? (
@@ -34,7 +30,7 @@ const Deck = (props) => {
                 <Card
                   symbol={symbol}
                   number={number}
-                  key={index}
+                  key={props.title + index}
                   flipped={parseInt(props.flipped) > index}
                 />
               );

@@ -10,29 +10,34 @@ const Card = (props) => {
       onClick={() => {
         setIsFlipped(!isFlipped);
       }}
-      className={["card", isFlipped ? "flipped" : ""].filter(Boolean).join(" ")}
+      className={["card", isFlipped ? "flipped" : "", props.symbol]
+        .filter(Boolean)
+        .join(" ")}
+      number={props.number}
     >
       <div className="container">
         <div className="front">
-          <div className="card-corner">
+          <div className="card-corner top-left">
             <div> {props.number}</div>
             <div> {props.symbol}</div>
           </div>
           <div className="symbols">
-            {props.number === "A" && <div> {props.symbol}</div>}
+            {props.number === "A" && (
+              <div className="symbol_A"> {props.symbol}</div>
+            )}
             {["J", "Q", "K"].includes(props.number) && (
               <div className="image"></div>
             )}
             {isNumber &&
               new Array(parseInt(props.number))
                 .fill(props.symbol)
-                .map((cardSymbol, key) => (
-                  <div key={key} className="cardsymbol">
+                .map((cardSymbol, index) => (
+                  <div key={index + props.number + props.symbol}>
                     {cardSymbol}
                   </div>
                 ))}
           </div>
-          <div className="card-corner">
+          <div className="card-corner bottom-right">
             <div>{props.number}</div>
             <div>{props.symbol}</div>
           </div>
